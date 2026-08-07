@@ -90,4 +90,4 @@ Each folder has its own README with the specific compile/run command and what th
 
 ## Portfolio Note
 
-Earlier single-language iterations of this work exist in the archived source repositories (`cpp-structured-programming`, `data-structures-and-algorithms-java`, `object-oriented-programming-java`, `python-intro-programming`). This repo is their consolidated, concept-organised successor.
+These examples originally lived in four separate single-language repositories. This repo is their consolidated, concept-organised successor — the point is that the concepts transfer across languages, not that each language needs its own repo.
