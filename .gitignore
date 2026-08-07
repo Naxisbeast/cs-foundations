@@ -1,0 +1,16 @@
+# Compiled Java
+*.class
+out/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Compiled C++
+*.exe
+*.o
+
+# Editor
+.vscode/
+.idea/
