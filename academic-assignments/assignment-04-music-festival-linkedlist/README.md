@@ -6,7 +6,7 @@ This learning exercise focused on using a custom linked list to manage ticket bo
 
 ## Task Summary
 
-The task involved creating a music festival ticket booking system using `MyLinkedList`. The system supported booking tickets, cancelling bookings, checking bookings, displaying attendees alphabetically, checking event availability, showing attendee details, and running a spin-the-wheel prize feature.
+The task involved creating a music festival ticket booking system using `MyLinkedList`. The system supported booking tickets, cancelling bookings, checking bookings, displaying attendees, checking event availability, showing attendee details, and running a spin-the-wheel prize feature.
 
 ## Data Structures Or Algorithms Used
 
@@ -29,7 +29,3 @@ The task involved creating a music festival ticket booking system using `MyLinke
 - Add safer checks for missing bookings.
 - Use clearer method names for linked list operations.
 - Improve alphabetical display with a dedicated sorting or insertion approach.
-
-## Source Files
-
-Source files will be added later after review and cleanup.

@@ -31,7 +31,3 @@ The complexity discussion included tau notation, simplified analysis, and Big-O 
 - Use clearer comparison logic.
 - Add comments that explain the complexity analysis.
 - Add small sample outputs instead of relying only on raw console output.
-
-## Source Files
-
-Source files will be added later after review and cleanup.

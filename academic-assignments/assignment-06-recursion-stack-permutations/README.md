@@ -29,7 +29,3 @@ The task involved generating all permutations of a string using recursion. A sta
 - Separate permutation generation from trace printing.
 - Use clearer output formatting.
 - Add notes about factorial growth in the time complexity section.
-
-## Source Files
-
-Source files will be added later after review and cleanup.

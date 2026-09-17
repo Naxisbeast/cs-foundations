@@ -29,7 +29,3 @@ The task involved building a text-based Snake game on a 10x10 grid. The snake bo
 - Make the movement and collision logic easier to test.
 - Improve input handling.
 - Add clearer comments around the body update logic.
-
-## Source Files
-
-Source files will be added later after review and cleanup.

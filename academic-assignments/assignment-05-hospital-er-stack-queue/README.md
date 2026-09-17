@@ -42,7 +42,3 @@ The system demonstrated admitting patients, treating patients, undoing treatment
 - Add stronger input validation.
 - Add sample test cases for treating patients, undoing treatments, and empty queue handling.
 - Document the time complexity of the main operations.
-
-## Source Files
-
-Source files will be added later after review and cleanup.
