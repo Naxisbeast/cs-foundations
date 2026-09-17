@@ -67,12 +67,12 @@ These examples originally lived in separate repos, one per language. Putting the
 
 ## How To Run
 
-The examples are per-folder and self-contained.
+The Java demo compiles the four data-structure files together; the C++ and Python examples are per-folder and self-contained.
 
-Java:
+Java (run from the repo root):
 ```bash
 javac -d out data-structures/linked-list/SinglyLinkedList.java data-structures/stack/StackUsingArray.java data-structures/queue/QueueUsingArray.java data-structures/recursion/RecursionExamples.java src/examples/Main.java
-java -cp out Main
+java -cp out examples.Main
 ```
 
 C++:
