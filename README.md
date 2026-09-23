@@ -63,7 +63,7 @@ The `academic-assignments/` folder holds selected past CMPG221 exercises, summar
 
 ## Why Consolidate
 
-These examples originally lived in separate repos, one per language. Putting them together makes the point explicit: the concepts transfer, the syntax doesn't. A reviewer can see the same stack implemented in Java and the same procedural patterns in C++ and Python side by side.
+These examples originally lived in separate repos, one per language. Putting them together makes the point explicit: the concepts transfer, the syntax doesn't. A reviewer can see the stack pattern in Java and the same step-by-step problem-solving approach repeated in the C++ and Python examples, side by side.
 
 ## How To Run
 
