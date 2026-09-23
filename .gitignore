@@ -1,6 +1,10 @@
 # Compiled Java
 *.class
 out/
+build/
+
+# JUnit runner (downloaded by scripts/verify.sh)
+lib/
 
 # Python
 __pycache__/
