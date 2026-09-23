@@ -84,7 +84,16 @@ public class SnakeGame {
 
         Point newHead = new Point(newX, newY);
 
-        // Collision with self
+        boolean eatsFood = newHead.equals(food);
+
+        // The tail leaves the board this move unless the snake grows, so moving
+        // into the cell the tail currently occupies is legal. Vacate it first,
+        // otherwise a chase-your-own-tail move is wrongly reported as a collision.
+        if (!eatsFood) {
+            snake.remove(snake.getSize() - 1);
+        }
+
+        // Collision with the body (tail has already moved away)
         if (snake.contains(newHead)) {
             gameOver();
             return;
@@ -93,12 +102,9 @@ public class SnakeGame {
         // Add head
         snake.add(0, newHead);
 
-        // Check food
-        if (newHead.equals(food)) {
+        if (eatsFood) {
             score++;
             spawnFood();
-        } else {
-            snake.remove(snake.getSize() - 1);
         }
     }
 
