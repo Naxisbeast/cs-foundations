@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class BookingSystem {
     private static MyLinkedList<Event> events = new MyLinkedList<>();
@@ -96,8 +97,7 @@ public class BookingSystem {
         String prize = spinPrize();
         attendee.setPrize(prize);
 
-        // Add to event's attendee list
-        event.getAttendees().append(attendee);
+        event.addAttendee(attendee);
 
         System.out.println("\nBooking successful!");
         System.out.println("Event: " + event.getEventID() + " - " + event.getStage());
@@ -139,11 +139,8 @@ public class BookingSystem {
         System.out.print("Enter Email: ");
         String email = scanner.nextLine().trim();
 
-        // Create a dummy attendee for searching
-        Attendee searchAttendee = new Attendee(id, "", "", "", email, "");
-
-        // Use the delete method which works with compareTo
-        boolean removed = event.getAttendees().delete(searchAttendee);
+        boolean removed = event.removeAttendee(
+                attendee -> attendee.getIdNumber().equals(id) || attendee.getEmail().equals(email));
 
         if (removed) {
             System.out.println("Booking cancelled successfully.");
@@ -169,21 +166,9 @@ public class BookingSystem {
         System.out.print("Enter Seat Number: ");
         String seat = scanner.nextLine().trim();
 
-        // For seat-based cancellation, we need to search manually
-        // since our compareTo only uses ID for comparison
+        boolean removed = event.removeAttendee(attendee -> attendee.getSeatNumber().equals(seat));
 
-        // Convert the linked list to string and search for the seat
-        String attendeesStr = event.getAttendees().toString();
-        if (attendeesStr.contains("Seat: " + seat)) {
-            // Extract the ID from the string and use it to delete
-            int seatIndex = attendeesStr.indexOf("Seat: " + seat);
-            int idStart = attendeesStr.lastIndexOf("ID: ", seatIndex) + 4;
-            int idEnd = attendeesStr.indexOf(",", idStart);
-            String id = attendeesStr.substring(idStart, idEnd).trim();
-
-            // Create dummy attendee and delete using ID
-            Attendee toRemove = new Attendee(id, "", "", "", "", "");
-            event.getAttendees().delete(toRemove);
+        if (removed) {
             System.out.println("Booking cancelled successfully.");
         } else {
             System.out.println("Booking not found. Would you like to book instead? (Y/N)");
@@ -207,54 +192,47 @@ public class BookingSystem {
         System.out.println("Search by: 1. ID Number 2. Name 3. Contact Number 4. Email");
         System.out.print("Choose: ");
 
+        int choice;
         try {
-            int choice = Integer.parseInt(scanner.nextLine());
-            String searchTerm = "";
-
-            switch (choice) {
-                case 1 -> {
-                    System.out.print("Enter ID Number: ");
-                    searchTerm = scanner.nextLine().trim();
-                }
-                case 2 -> {
-                    System.out.print("Enter Name: ");
-                    searchTerm = scanner.nextLine().trim();
-                }
-                case 3 -> {
-                    System.out.print("Enter Contact Number: ");
-                    searchTerm = scanner.nextLine().trim();
-                }
-                case 4 -> {
-                    System.out.print("Enter Email: ");
-                    searchTerm = scanner.nextLine().trim();
-                }
-                default -> {
-                    System.out.println("Invalid choice.");
-                    return;
-                }
-            }
-
-            // Convert to string and search
-            String attendeesStr = event.getAttendees().toString();
-            boolean found = attendeesStr.contains(searchTerm);
-
-            if (found) {
-                System.out.println("Booking found in event " + eventID);
-                // Extract and display the specific booking details
-                int startIndex = attendeesStr.indexOf(searchTerm);
-                int endIndex = attendeesStr.indexOf(")", startIndex) + 1;
-                if (startIndex != -1 && endIndex != -1) {
-                    System.out.println(attendeesStr.substring(startIndex, endIndex));
-                }
-            } else {
-                System.out.println("Booking not found. Would you like to book instead? (Y/N)");
-                String response = scanner.nextLine().trim();
-                if (response.equalsIgnoreCase("Y")) {
-                    bookTicket();
-                }
-            }
+            choice = Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("Please enter a valid number.");
+            return;
+        }
+
+        String prompt = switch (choice) {
+            case 1 -> "Enter ID Number: ";
+            case 2 -> "Enter Name: ";
+            case 3 -> "Enter Contact Number: ";
+            case 4 -> "Enter Email: ";
+            default -> null;
+        };
+        if (prompt == null) {
+            System.out.println("Invalid choice.");
+            return;
+        }
+
+        System.out.print(prompt);
+        String searchTerm = scanner.nextLine().trim();
+
+        Predicate<Attendee> predicate = switch (choice) {
+            case 1 -> attendee -> attendee.getIdNumber().equals(searchTerm);
+            case 2 -> attendee -> attendee.getName().equals(searchTerm) || attendee.getSurname().equals(searchTerm);
+            case 3 -> attendee -> attendee.getContactNumber().equals(searchTerm);
+            case 4 -> attendee -> attendee.getEmail().equals(searchTerm);
+            default -> attendee -> false;
+        };
+
+        Attendee found = event.findAttendee(predicate);
+        if (found != null) {
+            System.out.println("Booking found in event " + eventID);
+            System.out.println(found);
+        } else {
+            System.out.println("Booking not found. Would you like to book instead? (Y/N)");
+            String response = scanner.nextLine().trim();
+            if (response.equalsIgnoreCase("Y")) {
+                bookTicket();
+            }
         }
     }
 
@@ -275,14 +253,9 @@ public class BookingSystem {
             System.out.println("Total: " + event.getAttendeeCount() + "/" + event.getMaxTickets());
             System.out.println("----------------------------------------");
 
-            // Display the string representation which shows all attendees
-            String attendeesStr = event.getAttendees().toString();
-            // Remove the brackets and split by commas
-            attendeesStr = attendeesStr.substring(1, attendeesStr.length() - 1);
-            String[] attendees = attendeesStr.split(",");
-
-            for (String attendee : attendees) {
-                System.out.println(attendee.trim());
+            // Traverse the linked list directly instead of splitting a string.
+            for (Attendee attendee : event.getAttendees()) {
+                System.out.println(attendee);
             }
         }
 
@@ -304,53 +277,20 @@ public class BookingSystem {
         System.out.println("ID\tDate\t\tLocation\tStage\t\tAvailable");
         System.out.println("----------------------------------------------------------------");
 
-        // Convert events to string and parse it
-        String eventsStr = events.toString();
-        eventsStr = eventsStr.substring(1, eventsStr.length() - 1);
-        String[] eventArray = eventsStr.split(",");
-
-        for (String eventStr : eventArray) {
-            System.out.println(eventStr.trim());
+        for (Event event : events) {
+            System.out.println(event);
         }
     }
 
     private static Event findEvent(String id) {
-        // Convert events to string and search for the ID
-        String eventsStr = events.toString();
-        if (eventsStr.contains("Event: " + id)) {
-            // Extract the event details
-            int startIndex = eventsStr.indexOf("Event: " + id);
-            int endIndex = eventsStr.indexOf(")", startIndex) + 1;
-
-            if (startIndex != -1 && endIndex != -1) {
-                String eventDetails = eventsStr.substring(startIndex, endIndex);
-                // Parse the event details to create an event object
-                String[] parts = eventDetails.split("\\|");
-                if (parts.length >= 4) {
-                    String eventID = parts[0].replace("Event: ", "").trim();
-                    String date = parts[1].trim();
-                    String location = parts[2].trim();
-                    String[] stageParts = parts[3].split("Tickets:");
-                    String stage = stageParts[0].trim();
-                    String[] ticketParts = stageParts[1].split("/");
-                    int booked = Integer.parseInt(ticketParts[0].trim());
-                    int max = Integer.parseInt(ticketParts[1].replace(")", "").trim());
-
-                    Event event = new Event(eventID, date, location, stage, max);
-                    // Set the attendee count
-                    event.setAttendeeCount(booked);
-                    return event;
-                }
-            }
-        }
-        return null;
+        return events.findFirst(event -> event.getEventID().equals(id));
     }
 
     private static boolean isAlreadyBooked(Event event, String id, String email, String contact) {
-        String attendeesStr = event.getAttendees().toString();
-        return attendeesStr.contains("ID: " + id) ||
-                attendeesStr.contains("Email: " + email) ||
-                attendeesStr.contains("Contact: " + contact);
+        return event.findAttendee(attendee ->
+                attendee.getIdNumber().equals(id)
+                        || attendee.getEmail().equals(email)
+                        || attendee.getContactNumber().equals(contact)) != null;
     }
 
     private static String spinPrize() {

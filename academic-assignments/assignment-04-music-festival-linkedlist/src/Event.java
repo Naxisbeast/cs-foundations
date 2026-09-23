@@ -23,8 +23,27 @@ class Event {
     public String getStage() { return stage; }
     public int getMaxTickets() { return maxTickets; }
     public int getAttendeeCount() { return attendeeCount; }
-    public void setAttendeeCount(int count) { this.attendeeCount = count; }
     public MyLinkedList<Attendee> getAttendees() { return attendees; }
+
+    /** Add an attendee and keep the booked-count in sync. */
+    public void addAttendee(Attendee attendee) {
+        attendees.append(attendee);
+        attendeeCount++;
+    }
+
+    /** Remove the first attendee matching the predicate and keep the count in sync. */
+    public boolean removeAttendee(java.util.function.Predicate<Attendee> predicate) {
+        boolean removed = attendees.removeFirstMatch(predicate);
+        if (removed) {
+            attendeeCount--;
+        }
+        return removed;
+    }
+
+    /** Find the first attendee matching the predicate, or null. */
+    public Attendee findAttendee(java.util.function.Predicate<Attendee> predicate) {
+        return attendees.findFirst(predicate);
+    }
 
     @Override
     public String toString() {

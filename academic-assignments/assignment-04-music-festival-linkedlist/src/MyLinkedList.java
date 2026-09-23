@@ -1,5 +1,9 @@
 
-public class MyLinkedList<E>  {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.function.Predicate;
+
+public class MyLinkedList<E> implements Iterable<E> {
     private Node<E> head, tail;
 
     public MyLinkedList() {
@@ -111,6 +115,61 @@ public class MyLinkedList<E>  {
         head = tail = null;
     }
 
+    /** Find and return the first element matching the predicate, or null. */
+    public E findFirst(Predicate<E> predicate) {
+        Node<E> ptr = head;
+        while (ptr != null) {
+            if (predicate.test(ptr.element)) {
+                return ptr.element;
+            }
+            ptr = ptr.next;
+        }
+        return null;
+    }
+
+    /** Remove the first element matching the predicate. Returns true if one was removed. */
+    public boolean removeFirstMatch(Predicate<E> predicate) {
+        Node<E> ptr = head;
+        Node<E> prvPtr = null;
+        while (ptr != null && !predicate.test(ptr.element)) {
+            prvPtr = ptr;
+            ptr = ptr.next;
+        }
+        if (ptr == null) {
+            return false;
+        }
+        if (ptr == head) {
+            head = head.next;
+        } else {
+            prvPtr.next = ptr.next;
+        }
+        if (ptr == tail) {
+            tail = prvPtr;
+        }
+        return true;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            private Node<E> current = head;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public E next() {
+                if (current == null) {
+                    throw new NoSuchElementException();
+                }
+                E element = current.element;
+                current = current.next;
+                return element;
+            }
+        };
+    }
 
     private static class Node<E> {
         E element;
