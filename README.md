@@ -14,6 +14,8 @@ It collects the foundation work I did across Python, Java, and C++ into one plac
 
 These are clean implementations with edge-case handling (empty structures, full arrays) and a demo runner in `src/examples/`.
 
+The same stack and queue are also implemented in Python (`python-basics/data-structures/`) and C++ (`structured-programming/data-structures/`), so each structure can be compared across languages — the operations stay the same, the syntax changes.
+
 ### Object-Oriented Programming — Java
 - **Classes & objects** — `oop-principles/classes-objects/`
 - **Encapsulation** — `oop-principles/encapsulation/`
