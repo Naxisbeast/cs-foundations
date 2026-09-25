@@ -70,3 +70,47 @@ For example, when searching for a value in a list:
 | `fibonacci` | O(2^n) | The simple version repeats many calculations. |
 | `sumArray` | O(n) | It visits each array element once. |
 | `countdown` | O(n) | It prints each number down to 0. |
+
+## Phase 2 Time Complexity Tables
+
+### Binary Search — `data-structures/search/`
+
+| Operation | Time Complexity | Space Complexity | Reason |
+|---|---|---|---|
+| `search` (iterative) | O(log n) | O(1) | Halves the search range each step; no extra memory. |
+| `searchRecursive` | O(log n) | O(log n) | Same halving, but each call adds a stack frame. |
+
+### Merge Sort — `data-structures/sorting/`
+
+| Operation | Time Complexity | Space Complexity | Reason |
+|---|---|---|---|
+| `sort` | O(n log n) all cases | O(n) | Divides into halves (log n levels) and merges each level (n work); the merge allocates two temporary arrays. Stable because the left half is consumed first on equal values. |
+
+### Binary Search Tree — `data-structures/tree/`
+
+| Operation | Time Complexity | Space Complexity | Reason |
+|---|---|---|---|
+| `insert` | O(log n) average, O(n) worst | O(log n) average | Balanced trees halve the search each level; a skewed tree degrades to a linked list. |
+| `contains` | O(log n) average, O(n) worst | O(log n) average | Same as insert. |
+| `min` / `max` | O(log n) average, O(n) worst | O(1) | Follow the leftmost / rightmost path. |
+| `inOrder` | O(n) | O(n) | Visits every node; stores the result list. |
+| `height` | O(n) | O(log n) average | Visits every node on the recursion stack. |
+
+### HashMap (separate chaining) — `data-structures/hash/`
+
+| Operation | Time Complexity | Space Complexity | Reason |
+|---|---|---|---|
+| `put` | O(1) average, O(n) worst | O(1) per entry | A good hash spreads keys evenly; one bucket can degrade to a linked list. |
+| `get` | O(1) average, O(n) worst | O(1) | Same reasoning as put. |
+| `remove` | O(1) average, O(n) worst | O(1) | Same reasoning as put. |
+
+## Space Complexity
+
+Time complexity answers "how much faster does it get with more input?". Space complexity answers "how much extra memory does it use with more input?".
+
+- **O(1) constant** — the algorithm needs a fixed amount of extra memory regardless of input size. In-place array operations, the iterative stack/queue, and iterative binary search all qualify.
+- **O(n) linear** — extra memory grows with the input. The array stack and queue themselves use O(n) to store their values; merge sort needs O(n) for its merge buffers; a hash map uses O(capacity + entries).
+- **O(log n) logarithmic** — extra memory grows slowly. The recursion stack of binary search, and the height of a balanced BST, are both O(log n).
+- **O(2^n) / O(n!)** — the classic recursive fibonacci is O(2^n) time and O(n) stack depth; permutations are O(n!) time.
+
+When asked about a structure in an interview, give both numbers: *"insert is O(log n) time and O(log n) space for a balanced tree"*.
