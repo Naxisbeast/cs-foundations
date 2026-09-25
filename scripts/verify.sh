@@ -33,9 +33,9 @@ fi
 rm -rf "$OUT"
 mkdir -p "$OUT"
 
-# 2. Compile the Java core
+# 2. Compile the Java core (data structures, OOP examples, demo runner, benchmarks)
 echo "[verify] compiling Java core..."
-CORE_SOURCES=$(find data-structures oop-principles src/examples -name '*.java')
+CORE_SOURCES=$(find data-structures oop-principles src/examples benchmarks -name '*.java')
 javac -d "$OUT" $CORE_SOURCES
 PASS=$((PASS + 1))
 
