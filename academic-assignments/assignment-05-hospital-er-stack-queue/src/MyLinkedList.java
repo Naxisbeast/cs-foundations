@@ -71,19 +71,19 @@ public class MyLinkedList<E>  {
     {
         Node<E> ptr = head;
         Node<E> prvPtr = null;
-        while (ptr!= null&& ((Comparable)ptr.element).compareTo(item)!= 0)
+        while (ptr != null && !ptr.element.equals(item))
         {
-            prvPtr=ptr;
-            ptr=ptr.next;
+            prvPtr = ptr;
+            ptr = ptr.next;
         }
-        if (ptr == null)//item not found
+        if (ptr == null) //item not found
             return false;
-        if (ptr==head) // item is first element
-            head= head.next;
+        if (ptr == head) // item is first element
+            head = head.next;
         else // general case
-            prvPtr.next=ptr.next;
-        if (ptr==tail)// last element
-            tail=prvPtr;
+            prvPtr.next = ptr.next;
+        if (ptr == tail) // last element
+            tail = prvPtr;
         return true;
     }
 
