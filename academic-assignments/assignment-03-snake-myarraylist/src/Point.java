@@ -14,4 +14,10 @@ public class Point {
         Point other = (Point) obj;
         return this.x == other.x && this.y == other.y;
     }
+
+    @Override
+    public int hashCode() {
+        // Consistent with equals: equal points must have equal hashCodes.
+        return 31 * x + y;
+    }
 }

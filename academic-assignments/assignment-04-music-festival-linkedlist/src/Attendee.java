@@ -46,4 +46,10 @@ class Attendee implements Comparable<Attendee> {
         Attendee other = (Attendee) obj;
         return this.idNumber.equals(other.idNumber);
     }
+
+    @Override
+    public int hashCode() {
+        // Consistent with equals: equality is based on idNumber.
+        return idNumber.hashCode();
+    }
 }
