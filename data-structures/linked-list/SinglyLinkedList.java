@@ -51,6 +51,16 @@ public class SinglyLinkedList {
         return removedValue;
     }
 
+    public Integer peekFirst() {
+        // I check for an empty list before reading the head value.
+        if (isEmpty()) {
+            System.out.println("The list is empty. There is no first value to peek.");
+            return null;
+        }
+
+        return head.value;
+    }
+
     public boolean contains(int value) {
         Node currentNode = head;
 
