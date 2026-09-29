@@ -104,6 +104,30 @@ For example, when searching for a value in a list:
 | `get` | O(1) average, O(n) worst | O(1) | Same reasoning as put. |
 | `remove` | O(1) average, O(n) worst | O(1) | Same reasoning as put. |
 
+### Graph (adjacency list) — `data-structures/graph/`
+
+| Operation | Time Complexity | Space Complexity | Reason |
+|---|---|---|---|
+| `bfs` | O(V + E) | O(V) | Every node and edge is visited once; the visited set plus the queue. |
+| `dfs` | O(V + E) | O(V) | Every node and edge is visited once; the visited set plus the recursion stack. |
+| `addEdge` | O(1) amortised | O(1) | Appends to a node's neighbour list. |
+
+### MinHeap — `data-structures/heap/`
+
+| Operation | Time Complexity | Space Complexity | Reason |
+|---|---|---|---|
+| `insert` | O(log n) | O(1) | Sift-up walks the height of the tree. |
+| `extractMin` | O(log n) | O(1) | Sift-down walks the height of the tree. |
+| `peek` | O(1) | O(1) | The smallest value is always at index 0. |
+
+### Fibonacci (dynamic programming) — `data-structures/dp/`
+
+| Version | Time Complexity | Space Complexity | Reason |
+|---|---|---|---|
+| `recursive` | O(2^n) | O(n) | Recomputes every overlapping subproblem; the call stack is n deep. |
+| `memoized` | O(n) | O(n) | Each subproblem computed once, then stored. |
+| `tabulated` | O(n) | O(1) | Bottom-up, keeping only two rolling values. |
+
 ## Space Complexity
 
 Time complexity answers "how much faster does it get with more input?". Space complexity answers "how much extra memory does it use with more input?".
