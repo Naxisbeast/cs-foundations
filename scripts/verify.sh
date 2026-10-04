@@ -59,10 +59,16 @@ for dir in academic-assignments/assignment-*/src; do
 done
 PASS=$((PASS + 1))
 
-# 5. Python syntax check
+# 5. Python syntax check + pytest suite
 echo "[verify] checking Python syntax..."
 python -m py_compile $(find python-basics -name '*.py')
 PASS=$((PASS + 1))
+
+if [ -d "tests/python" ]; then
+    echo "[verify] running pytest suite..."
+    python -m pytest tests/python -q
+    PASS=$((PASS + 1))
+fi
 
 # 6. C++ compile check (optional — needs a compiler; CI covers this)
 if command -v g++ >/dev/null 2>&1; then
