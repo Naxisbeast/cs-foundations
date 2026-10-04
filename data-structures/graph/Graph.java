@@ -23,15 +23,27 @@ import java.util.Set;
  *
  * Time complexity of both traversals: O(V + E) — every node and edge is
  * visited once. Space: O(V) for the visited set (plus the queue / stack).
+ *
+ * With weighted edges, dijkstra(source) finds the shortest distances from
+ * a start node. The version here picks the next unvisited node by scanning
+ * (O(V^2)); a binary-heap priority queue brings it to O((V + E) log V) —
+ * the same min-heap from data-structures/heap/ in action.
  */
 public class Graph {
 
     private final Map<Integer, List<Integer>> adjacency = new HashMap<>();
+    private final Map<Integer, Map<Integer, Integer>> weights = new HashMap<>();
 
     /** Add a directed edge from -> to. The to-node is created even if it has no outgoing edges. */
     public void addEdge(int from, int to) {
         adjacency.computeIfAbsent(from, k -> new ArrayList<>()).add(to);
         adjacency.computeIfAbsent(to, k -> new ArrayList<>());
+    }
+
+    /** Add a directed weighted edge. Unweighted edges count as weight 1. */
+    public void addWeightedEdge(int from, int to, int weight) {
+        addEdge(from, to);
+        weights.computeIfAbsent(from, k -> new HashMap<>()).put(to, weight);
     }
 
     /** The neighbours a node points to (empty list if the node is unknown). */
@@ -78,5 +90,59 @@ public class Graph {
         for (int next : adjacency.get(node)) {
             dfs(next, visited, order);
         }
+    }
+
+    /**
+     * Shortest distances from a source node. Unreachable nodes map to
+     * Integer.MAX_VALUE. Empty map if the source is not in the graph.
+     */
+    public Map<Integer, Integer> dijkstra(int source) {
+        Map<Integer, Integer> distances = new HashMap<>();
+        if (!adjacency.containsKey(source)) {
+            return distances;
+        }
+
+        for (int node : adjacency.keySet()) {
+            distances.put(node, Integer.MAX_VALUE);
+        }
+        distances.put(source, 0);
+
+        Set<Integer> visited = new HashSet<>();
+        while (visited.size() < adjacency.size()) {
+            int current = minUnvisited(distances, visited);
+            if (current == -1) {
+                break;
+            }
+            visited.add(current);
+
+            long currentDistance = distances.get(current);
+            if (currentDistance == Integer.MAX_VALUE) {
+                continue;
+            }
+            for (int next : adjacency.get(current)) {
+                long candidate = currentDistance + weight(current, next);
+                if (candidate < distances.get(next)) {
+                    distances.put(next, (int) candidate);
+                }
+            }
+        }
+        return distances;
+    }
+
+    private int minUnvisited(Map<Integer, Integer> distances, Set<Integer> visited) {
+        int best = -1;
+        int bestDistance = Integer.MAX_VALUE;
+        for (Map.Entry<Integer, Integer> entry : distances.entrySet()) {
+            if (!visited.contains(entry.getKey()) && entry.getValue() < bestDistance) {
+                best = entry.getKey();
+                bestDistance = entry.getValue();
+            }
+        }
+        return best;
+    }
+
+    private int weight(int from, int to) {
+        Map<Integer, Integer> fromWeights = weights.getOrDefault(from, Collections.emptyMap());
+        return fromWeights.getOrDefault(to, 1);
     }
 }
