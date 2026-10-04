@@ -1,22 +1,39 @@
 # cs-foundations
 
-I kept noticing the same ideas repeat across every language I learned — a stack is a stack whether it's Python, Java, or C++. This repo is that observation, made concrete.
+[![verify](https://github.com/Naxisbeast/cs-foundations/actions/workflows/verify.yml/badge.svg)](https://github.com/Naxisbeast/cs-foundations/actions/workflows/verify.yml)
 
-It collects the foundation work I did across Python, Java, and C++ into one place, organised by concept rather than by course or language, so the pattern shows instead of the syllabus.
+I kept noticing the same ideas repeat across every language I learned — a stack is a stack whether it's Python, Java, or C++. This repo is that observation, made concrete: the foundation work I did across three languages, organised by concept instead of by syllabus.
+
+## Start Here
+
+- **[Data structures](./data-structures/README.md)** — stack, queue, linked list, binary search, merge sort, BST, heap, hash map, graph. Each with edge-case handling and JUnit tests.
+- **[Mini projects](./mini-projects/README.md)** — a Minesweeper whose flood-fill reveal is BFS in disguise, a to-do list on a hand-rolled linked list, an expense tracker, Hangman, and more.
+- **[One concept, three languages](./notes/what-transfers-and-what-doesnt.md)** — the same stack and queue in Java, Python, and C++, and what moving between them taught me.
+- **[Benchmarks](./benchmarks/RESULTS.md)** — complexity claims tested against a stopwatch, not just asserted.
 
 ## What's Inside
 
-### Data Structures — Java
-- **Linked list** — `data-structures/linked-list/`
+### Data Structures — Java · *demonstrates: edge-case handling, O(1)/O(log n) APIs, test-first thinking*
+
+- **Linked list** — `data-structures/linked-list/` (plus a linked-list stack and queue)
 - **Stack** (array-based) — `data-structures/stack/`
 - **Queue** (array-based) — `data-structures/queue/`
 - **Recursion** — `data-structures/recursion/`
+- **Binary search** — `data-structures/search/`
+- **Merge sort** — `data-structures/sorting/`
+- **Binary search tree** — `data-structures/tree/` (insert, delete, three traversals)
+- **Min heap** — `data-structures/heap/`
+- **Hash map** — `data-structures/hash/` (separate chaining)
+- **Graph** — `data-structures/graph/` (BFS + DFS)
 
-These are clean implementations with edge-case handling (empty structures, full arrays) and a demo runner in `src/examples/`.
+Every structure has its own JUnit tests, and the per-operation complexity is documented in [`notes/time-complexity.md`](notes/time-complexity.md).
 
-The same stack and queue are also implemented in Python (`python-basics/data-structures/`) and C++ (`structured-programming/data-structures/`), so each structure can be compared across languages — the operations stay the same, the syntax changes.
+### Mini Projects — Java, Python, C++ · *demonstrates: applying structures to real programs*
 
-### Object-Oriented Programming — Java
+See [`mini-projects/README.md`](mini-projects/README.md) — one page on each project, the structure it exercises, and how to run it.
+
+### Object-Oriented Programming — Java · *demonstrates: the four pillars, one worked example each*
+
 - **Classes & objects** — `oop-principles/classes-objects/`
 - **Encapsulation** — `oop-principles/encapsulation/`
 - **Inheritance** — `oop-principles/inheritance/`
@@ -24,72 +41,34 @@ The same stack and queue are also implemented in Python (`python-basics/data-str
 - **Abstraction** — `oop-principles/abstraction/`
 - **Interfaces** — `oop-principles/interfaces/`
 
-Each principle has a small worked example plus a test file showing it in use.
+Each principle has a small example and a runner showing it in use; the reasoning lives in [`notes/oop-principles.md`](notes/oop-principles.md).
 
-### Structured Programming — C++
-- **Input/output** — `structured-programming/input-output/`
-- **Conditionals** — `structured-programming/conditionals/`
-- **Loops** — `structured-programming/loops/`
-- **Functions** — `structured-programming/functions/`
-- **Arrays** — `structured-programming/arrays/`
-- **Structs** — `structured-programming/structs/`
-- **Mini project** (library menu system) — `structured-programming/mini-projects/`
+### The Same Idea In Every Language · *demonstrates: the concepts transfer, the syntax doesn't*
 
-This was my procedural programming foundation before moving into OOP and DSA.
+The stack and queue exist in all three languages:
 
-### Python Basics — Python
-- **Variables & input** — `python-basics/variables-input/`
-- **Conditionals** — `python-basics/conditionals/`
-- **Loops** — `python-basics/loops/`
-- **Functions** — `python-basics/functions/`
-- **Lists** — `python-basics/lists/`
-- **Files** — `python-basics/files/`
-- **Mini project** (simple banking menu) — `python-basics/mini-projects/`
+- Java — `data-structures/stack/`, `data-structures/queue/`
+- Python — `python-basics/data-structures/`
+- C++ — `structured-programming/data-structures/`
 
-### Academic Assignments — Java
-The `academic-assignments/` folder holds selected past CMPG221 exercises, summarised in my own words. These are cleaned summaries, not a raw coursework dump — no student numbers, private screenshots, or original instruction PDFs.
+[`notes/what-transfers-and-what-doesnt.md`](notes/what-transfers-and-what-doesnt.md) is the honest write-up: what stayed the same, what each language forced me to think about, and which version I'd reach for in production.
 
-- Assignment 1: OOP inheritance and polymorphism
-- Assignment 2: OOP arrays, sorting, and complexity
-- Assignment 3: Text-based Snake with `MyArrayList`
-- Assignment 4: Music festival booking with `MyLinkedList`
-- Assignment 5: Hospital emergency room with linked-list stack and queue
-- Assignment 6: Recursion, stack tracing, and string permutations
-- Assignment 7: Hybrid sorting algorithm
+### Structured Programming — C++ · *the procedural foundation before OOP*
 
-### Notes
-- `notes/time-complexity.md` — Big O, best/average/worst cases, complexity of the core structures
-- `notes/oop-principles.md` — the four pillars with concrete Java examples
-- `notes/structured-programming.md` and `notes/problem-solving-in-cpp.md` — C++ fundamentals
-- `notes/programming-basics.md` and `notes/problem-solving.md` — Python fundamentals
+Input/output, conditionals, loops, functions, arrays, structs, and a library-menu mini project — `structured-programming/`.
 
-## Why Consolidate
+### Python Basics — Python · *beginner Python, mirroring the C++ section*
 
-These examples originally lived in separate repos, one per language. Putting them together makes the point explicit: the concepts transfer, the syntax doesn't. A reviewer can see the stack pattern in Java and the same step-by-step problem-solving approach repeated in the C++ and Python examples, side by side.
+Variables, conditionals, loops, functions, lists, files, and a banking menu — `python-basics/`.
 
-## How To Run
+### Academic Assignments — Java · *selected past coursework, cleaned and summarised*
 
-The Java demo compiles the four data-structure files together; the C++ and Python examples are per-folder and self-contained.
+Seven CMPG221 exercises — OOP, arrays + complexity, Snake on `MyArrayList`, a booking system on `MyLinkedList`, an ER with linked-list stack/queue, recursion + permutations, and a hybrid sort — in `academic-assignments/`, each with a short "what I learned" write-up.
 
-Java (run from the repo root):
-```bash
-javac -d out data-structures/linked-list/SinglyLinkedList.java data-structures/stack/StackUsingArray.java data-structures/queue/QueueUsingArray.java data-structures/recursion/RecursionExamples.java src/examples/Main.java
-java -cp out examples.Main
-```
+## Verification
 
-C++:
-```bash
-g++ structured-programming/mini-projects/library_menu_system.cpp -o library_menu
-./library_menu
-```
+`bash scripts/verify.sh` compiles every Java folder, runs the JUnit suite, runs the pytest suite, syntax-checks the Python, and compiles the C++ when a compiler is present. GitHub Actions runs it on every push, so the badge above is live.
 
-Python:
-```bash
-python python-basics/mini-projects/simple_banking_menu.py
-```
+## Why One Repo
 
-Each folder has its own README with the specific compile/run command and what the example demonstrates.
-
-## Portfolio Note
-
-These examples originally lived in four separate single-language repositories. This repo is their consolidated, concept-organised successor — the point is that the concepts transfer across languages, not that each language needs its own repo.
+These examples started in four single-language repos. Putting them together is the point: the concepts transfer, the syntax doesn't. One repo shows the pattern instead of four copies of the syllabus.
