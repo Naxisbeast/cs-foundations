@@ -83,6 +83,7 @@ public:
     }
 };
 
+#ifndef STACK_TEST_MODE
 int main() {
     Stack stack(3);
     stack.pop();      // empty pop
@@ -97,3 +98,4 @@ int main() {
     cout << "Current size: " << stack.size() << endl;
     return 0;
 }
+#endif

@@ -70,13 +70,21 @@ if [ -d "tests/python" ]; then
     PASS=$((PASS + 1))
 fi
 
-# 6. C++ compile check (optional — needs a compiler; CI covers this)
+# 6. C++ compile check + test suite (optional — needs a compiler; CI covers this)
 if command -v g++ >/dev/null 2>&1; then
     echo "[verify] compiling C++ files..."
     for src in $(find structured-programming -name '*.cpp'); do
         g++ -std=c++17 -Wall -Wextra -fsyntax-only "$src"
     done
     PASS=$((PASS + 1))
+
+    if ls structured-programming/tests/*.cpp >/dev/null 2>&1; then
+        echo "[verify] running C++ test suite..."
+        g++ -std=c++17 -Wall -Wextra -o /tmp/mini_test structured-programming/tests/stack_queue_test.cpp
+        /tmp/mini_test
+        rm -f /tmp/mini_test
+        PASS=$((PASS + 1))
+    fi
 else
     echo "[verify] g++ not found — skipping C++ check (CI covers this)"
 fi

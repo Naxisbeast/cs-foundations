@@ -92,6 +92,7 @@ public:
     }
 };
 
+#ifndef QUEUE_TEST_MODE
 int main() {
     Queue queue(3);
     queue.dequeue();   // empty dequeue
@@ -107,3 +108,4 @@ int main() {
     cout << "Current size: " << queue.getSize() << endl;
     return 0;
 }
+#endif
