@@ -10,6 +10,11 @@ A small set of pure-Python modules for the numbers a data or quant role actually
 | `correlation.py` | Pearson correlation | `numpy.corrcoef` |
 | `normalize.py` | percentiles, z-scores, min-max scaling | known distributions |
 | `momentum_signal.py` | an end-to-end SMA-crossover demo over synthetic prices | deterministic output |
+| `risk_metrics.py` | Sharpe ratio, rolling volatility, historical value-at-risk | known series |
+| `bootstrap_ci.py` | bootstrap confidence interval for the mean | determinism + coverage |
+| `monte_carlo.py` | pi estimation and random-walk terminal distribution | seeded determinism |
+| `asset_pairs_data.py` | generates the two-asset `data/prices.csv` used by the note | reproducible output |
+| `research_note.py` | a two-asset report: returns, drawdown, Sharpe, correlation | sane ranges |
 
 ## Why from scratch
 
